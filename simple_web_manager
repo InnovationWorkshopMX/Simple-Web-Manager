@@ -53,7 +53,7 @@ do
                     mkdir -p $BASE_PATH/$ACCOUNT/{public_html,private,logs,cgi-bin,backup}
                     chmod -R 755 $BASE_PATH/$ACCOUNT
                     chown -R $ACCOUNT $BASE_PATH/$ACCOUNT
-                    chgrp -R web $BASE_PATH/$ACCOUNT
+                    chgrp -R www-data $BASE_PATH/$ACCOUNT
                     read -p "Give a domain: " DOMAIN
 
                     VHOST_DEFINITION="
@@ -65,7 +65,7 @@ do
                                     \n ErrorLog /home/$ACCOUNT/logs/$DOMAIN-error_log
                                \n </VirtualHost>"
                     FILE_NAME=`echo $DOMAIN| cut -d'.' -f 1`
-                    touch $VHOST_PATH/$FILE_NAME
+                    touch $VHOST_PATH/$FILE_NAME.conf
                     echo -e $VHOST_DEFINITION >> $VHOST_PATH/$FILE_NAME
                     a2ensite $FILE_NAME
                     service apache2 restart
@@ -108,7 +108,7 @@ do
                 read -p "Set mysql pass: " MSPASS
                 read -p "Database: " MSDB
 
-                QUERY3="GRANT ALL ON $MSDB.* TO '$DBUSER'@'localhost' IDENTIFIED BY '$MSPASS'; FLUSH PRIVILEGES;"
+                QUERY3="GRANT ALL ON $MSDB.* TO '$DBUSER'@'%' IDENTIFIED BY '$MSPASS'; FLUSH PRIVILEGES;"
                 $MYSQL -u root -p -e "$QUERY3"
                 ;;
 
