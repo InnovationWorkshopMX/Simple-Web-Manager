@@ -28,7 +28,7 @@ MYSQL=`which mysql`
 echo "$INFO"
 
 #Group validation
-/bin/egrep  -i "^web" /etc/group
+/bin/egrep  -i "^www\-data" /etc/group
 if [ $? -eq 0 ];
 then
     echo "Group verified..."
