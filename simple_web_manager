@@ -49,7 +49,8 @@ do
                 #Request account name and creates it
 
                 read -p "Give an account: " ACCOUNT
-                adduser $ACCOUNT
+                
+                useradd -G www-data $ACCOUNT
                     mkdir -p $BASE_PATH/$ACCOUNT/{public_html,private,logs,cgi-bin,backup}
                     chmod -R 755 $BASE_PATH/$ACCOUNT
                     chown -R $ACCOUNT $BASE_PATH/$ACCOUNT
@@ -66,7 +67,7 @@ do
                                \n </VirtualHost>"
                     FILE_NAME=`echo $DOMAIN| cut -d'.' -f 1`
                     touch $VHOST_PATH/$FILE_NAME.conf
-                    echo -e $VHOST_DEFINITION >> $VHOST_PATH/$FILE_NAME
+                    echo -e $VHOST_DEFINITION >> $VHOST_PATH/$FILE_NAME.conf
                     a2ensite $FILE_NAME
                     service apache2 restart
                     echo -e "ACCOUNT $ACCOUNT SUCCESFULLY CREATED \n"
