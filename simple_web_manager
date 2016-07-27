@@ -64,6 +64,14 @@ do
                                     \n ServerName $DOMAIN
                                     \n ServerAlias www.$DOMAIN
                                     \n ErrorLog /home/$ACCOUNT/logs/$DOMAIN-error_log
+                                    \n Alias / \"/home/$ACCOUNT/public_html/\"
+                                    \n <Directory \"/home/$ACCOUNT/public_html/\">
+                                    \n  Options All
+                                    \n  AllowOverride All
+                                    \n  order allow,deny
+                                    \n  Allow from all
+                                    \n  Require all granted
+                                    \n </Directory>
                                \n </VirtualHost>"
                     FILE_NAME=`echo $DOMAIN| cut -d'.' -f 1`
                     touch $VHOST_PATH/$FILE_NAME.conf
